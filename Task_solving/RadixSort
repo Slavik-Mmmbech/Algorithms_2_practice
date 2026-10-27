@@ -1,49 +1,37 @@
-package Task_solving;
-
 import java.util.Arrays;
 
 public class RadixSort {
     public static void main(String[] args) {
-        long[] arr = {123456789012L, 12L, 900000000000L};
-        System.out.println(Arrays.toString(arr));
-        sort(arr);
-        System.out.println(Arrays.toString(arr));
+        System.out.println("===Первый тест===");
+        long[] arr_1 = {123456789012L, 12L, 900000000000L};
+        System.out.println("До: " + Arrays.toString(arr_1));
+        sort(arr_1);
+        System.out.println("По: " + Arrays.toString(arr_1));
+
+        System.out.println("\n===Второй тест===");
+        long[] arr_2 = {111111111111L, 101010101010L};
+        System.out.println("До: " + Arrays.toString(arr_2));
+        sort(arr_2);
+        System.out.println("По: " + Arrays.toString(arr_2));
     }
 
     public static void sort(long[] arr) {
         if (arr == null || arr.length <= 1) return;
 
-        long min = arr[0];
         long max = arr[0];
         for (long val : arr) {
-            if (val < min) min = val;
             if (val > max) max = val;
-        }
-      
-        long shift = 0;
-        if (min < 0) {
-            shift = -min;
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] += shift;
-            }
-            max += shift;
         }
 
         for (long place = 1; max / place > 0; place *= 10) {
             countingSortByDigit(arr, place);
         }
-
-        if (shift > 0) {
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] -= shift;
-            }
-        } System.out.println(Arrays.toString(arr));
     }
 
     private static void countingSortByDigit(long[] arr, long place) {
         int n = arr.length;
         int[] count = new int[10];
-      
+
         for (long val : arr) {
             int digit = (int) ((val / place) % 10);
             count[digit]++;
